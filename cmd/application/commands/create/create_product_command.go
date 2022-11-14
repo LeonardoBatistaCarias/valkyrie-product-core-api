@@ -1,37 +1,38 @@
-package product
+package create
 
 import (
 	uuid "github.com/satori/go.uuid"
 	"time"
 )
 
-type Product struct {
-	ProductID     uuid.UUID
+type CreateProductCommand struct {
 	Name          string
 	Description   string
-	Brand         Brand
+	Brand         int32
 	Price         float32
 	Quantity      int32
 	CategoryID    uuid.UUID
-	ProductImages []*ProductImage
+	ProductImages []*CreateProductImageCommand
 	Active        bool
 	CreatedAt     time.Time
 	UpdatedAt     time.Time
 	DeletedAt     time.Time
 }
 
-func NewProduct(
-	productID uuid.UUID,
+type CreateProductImageCommand struct {
+	Address string
+}
+
+func NewCreateProductCommand(
 	name string,
 	description string,
-	brand Brand,
+	brand int32,
 	price float32,
 	quantity int32,
 	categoryID uuid.UUID,
-	images []*ProductImage,
-	active bool) *Product {
-	return &Product{
-		ProductID:     productID,
+	images []*CreateProductImageCommand,
+	active bool) *CreateProductCommand {
+	return &CreateProductCommand{
 		Name:          name,
 		Description:   description,
 		Brand:         brand,
@@ -42,7 +43,3 @@ func NewProduct(
 		Active:        active,
 	}
 }
-
-//func (p *Product) Validate(v validator.Validator) {
-//	v.Execute(*p)
-//}

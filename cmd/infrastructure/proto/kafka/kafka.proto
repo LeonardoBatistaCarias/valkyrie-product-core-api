@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option go_package = "kafkaMessages";
+
+message ProductCreate {
+  string ProductID = 1;
+  string Name = 2;
+  string Description = 3;
+  int32 Brand = 4;
+  float Price = 5;
+  int32 Quantity = 6;
+  string CategoryID = 7;
+  repeated ProductImage productImages = 8;
+  bool Active = 9;
+  string CreatedAt = 10;
+  string UpdatedAt = 11;
+  string DeletedAt = 12;
+}
+
+message ProductImage {
+  string name = 1;
+  string productID = 2;
+}

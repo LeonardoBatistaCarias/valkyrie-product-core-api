@@ -1,6 +1,6 @@
 package product
 
-type Brand int
+type Brand int32
 
 const (
 	APPLE    Brand = 1

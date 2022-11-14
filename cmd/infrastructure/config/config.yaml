@@ -1,0 +1,19 @@
+serviceName: product_core_api
+
+http:
+  port: :8081
+  development: true
+  basePath: /api/v1
+  productsPath: /api/v1/products
+  debugHeaders: false
+  httpClientDebug: false
+  debugErrorsResponse: true
+kafka:
+  brokers: [ "localhost:9092" ]
+  groupID: product_core_writer_api_consumer
+  initTopics: true
+kafkaTopics:
+  productCreate:
+    topicName: product_create
+    partitions: 10
+    replicationFactor: 1
