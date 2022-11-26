@@ -3,11 +3,12 @@ package config
 import (
 	"flag"
 	"fmt"
+	"os"
+
 	kafkaConfig "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/kafka"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/utils/constants"
 	"github.com/pkg/errors"
 	"github.com/spf13/viper"
-	"os"
 )
 
 var configPath string
@@ -47,9 +48,7 @@ func InitConfig() (*Config, error) {
 			if err != nil {
 				return nil, errors.Wrap(err, "os.Getwd")
 			}
-			x := fmt.Sprintf("%s/cmd/infrastructure/config/config.yaml", getwd)
-			println(x)
-			configPath = fmt.Sprintf("%s/cmd/infrastructure/config/config.yaml", getwd)
+			configPath = fmt.Sprintf("%s/%s", getwd, constants.BASE_CONFIG_PATH)
 		}
 	}
 
