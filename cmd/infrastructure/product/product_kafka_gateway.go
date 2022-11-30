@@ -5,7 +5,7 @@ import (
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/domain/product"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/config"
 	producer "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/kafka"
-	kafkaMessages "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/proto/kafka"
+	protoProduct "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/proto/product"
 	"github.com/golang/protobuf/proto"
 	"github.com/segmentio/kafka-go"
 	"time"
@@ -25,7 +25,7 @@ func NewProductKafkaGateway(cfg *config.Config, producer producer.Producer) *Pro
 
 func (g *ProductKafkaGateway) Create(ctx context.Context, p product.Product) error {
 	msg := newProductCreateKafkaMessage(p)
-	
+
 	msgBytes, err := proto.Marshal(msg)
 	if err != nil {
 		return err
@@ -38,18 +38,18 @@ func (g *ProductKafkaGateway) Create(ctx context.Context, p product.Product) err
 	})
 }
 
-func newProductCreateKafkaMessage(p product.Product) *kafkaMessages.ProductCreate {
-	pbImages := make([]*kafkaMessages.ProductImage, len(p.ProductImages))
+func newProductCreateKafkaMessage(p product.Product) *protoProduct.Product {
+	pbImages := make([]*protoProduct.ProductImage, len(p.ProductImages))
 
 	for i, image := range p.ProductImages {
-		pi := &kafkaMessages.ProductImage{
+		pi := &protoProduct.ProductImage{
 			Name:      image.Name,
 			ProductID: image.ProductID.String(),
 		}
 		pbImages[i] = pi
 	}
 
-	return &kafkaMessages.ProductCreate{
+	return &protoProduct.Product{
 		ProductID:     p.ProductID.String(),
 		Name:          p.Name,
 		Description:   p.Description,
