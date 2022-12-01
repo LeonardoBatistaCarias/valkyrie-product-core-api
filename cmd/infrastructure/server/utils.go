@@ -10,10 +10,6 @@ import (
 	"strconv"
 )
 
-const (
-	stackSize = 1 << 10 // 1 KB
-)
-
 func (s *server) connectKafkaBrokers(ctx context.Context) error {
 	kafkaConn, err := kafkaClient.NewKafkaConn(ctx, s.cfg.Kafka)
 	if err != nil {

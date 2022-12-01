@@ -1,0 +1,44 @@
+definitions:
+  dto.CreateProductResponse:
+    properties:
+      productId:
+        type: string
+    required:
+    - productId
+    type: object
+  dto.ProductResponse:
+    properties:
+      createdAt:
+        type: string
+      description:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+      productId:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+info:
+  contact:
+    "name": "Leonardo Batista",
+    "url": "https://github.com/LeonardoBatistaCarias"
+paths:
+  /products:
+    post:
+      consumes:
+      - application/json
+      description: Create new product item
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/dto.CreateProductResponse'
+      summary: Create product
+      tags:
+      - Products
+swagger: "2.0"
