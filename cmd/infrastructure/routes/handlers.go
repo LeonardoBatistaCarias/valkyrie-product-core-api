@@ -3,38 +3,57 @@ package routes
 import (
 	"context"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/application/commands"
-	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/application/commands/create"
+	commandModels "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/application/commands/models"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/product/models"
+	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
+	uuid "github.com/satori/go.uuid"
 	"net/http"
 )
 
 type productsHandlers struct {
-	group           *echo.Group
-	productCommands commands.ProductCommands
+	group *echo.Group
+	c     commands.Commands
+	v     *validator.Validate
 }
 
 func NewProductsHandlers(
 	group *echo.Group,
-	productCommands commands.ProductCommands,
+	c commands.Commands,
+	v *validator.Validate,
 ) *productsHandlers {
-	return &productsHandlers{group: group, productCommands: productCommands}
+	return &productsHandlers{group: group, c: c, v: v}
 }
 
 func (h *productsHandlers) CreateProduct() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		ctx := context.Background()
-		dto := &models.CreateProductDTO{}
-		if err := c.Bind(dto); err != nil {
-			return nil
+		req := &models.CreateProductRequest{}
+		if err := c.Bind(req); err != nil {
+			return c.JSON(http.StatusBadRequest, err)
+		}
+		req.ProductID = uuid.NewV4()
+		createCommand := buildProductCommand(*req)
+
+		p, err := h.c.CreateProduct.Handle(ctx, *createCommand)
+		if err != nil {
+			return c.JSON(http.StatusBadRequest, err)
 		}
 
-		createCommand := create.NewCreateProductCommand(dto.Name, dto.Description, dto.Brand, dto.Price, dto.Quantity, dto.CategoryID, nil, true)
-
-		if err := h.productCommands.CreateProduct.Handle(ctx, *createCommand); err != nil {
-			return c.JSON(http.StatusBadRequest, nil)
-		}
-
-		return c.JSON(http.StatusCreated, nil)
+		return c.JSON(http.StatusCreated, p)
 	}
+}
+
+func buildProductCommand(req models.CreateProductRequest) *commandModels.ProductCommand {
+	return commandModels.NewProductCommand(
+		req.ProductID,
+		req.Name,
+		req.Description,
+		req.Brand,
+		req.Price,
+		req.Quantity,
+		req.CategoryID,
+		nil,
+		req.Active,
+	)
 }

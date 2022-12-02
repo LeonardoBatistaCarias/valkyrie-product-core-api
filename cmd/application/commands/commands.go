@@ -2,10 +2,10 @@ package commands
 
 import "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/application/commands/create"
 
-type ProductCommands struct {
+type Commands struct {
 	CreateProduct create.CreateProductCommandHandler
 }
 
-func NewProductCommands(createProduct create.CreateProductCommandHandler) *ProductCommands {
-	return &ProductCommands{CreateProduct: createProduct}
+func NewCommands(createProduct create.CreateProductCommandHandler) *Commands {
+	return &Commands{CreateProduct: createProduct}
 }

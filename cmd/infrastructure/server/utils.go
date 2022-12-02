@@ -43,7 +43,7 @@ func (s *server) initKafkaTopics(ctx context.Context) {
 		log.Warnf("initKafkaTopics.DialContext", err)
 		return
 	}
-	defer conn.Close() // nolint: errcheck
+	defer conn.Close()
 
 	log.Infof("established new kafka controller connection: %s", controllerURI)
 

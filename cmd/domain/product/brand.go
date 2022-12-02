@@ -8,3 +8,7 @@ const (
 	XIAOMI   Brand = 3
 	MOTOROLA Brand = 4
 )
+
+func GetBrandFrom(code int32) Brand {
+	return Brand(code)
+}

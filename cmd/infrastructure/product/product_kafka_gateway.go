@@ -5,7 +5,7 @@ import (
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/domain/product"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/config"
 	producer "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/kafka"
-	protoProduct "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/proto/product"
+	protoProduct "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/product/proto"
 	"github.com/golang/protobuf/proto"
 	"github.com/segmentio/kafka-go"
 	"time"
