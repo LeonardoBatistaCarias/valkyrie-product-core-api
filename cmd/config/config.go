@@ -3,10 +3,11 @@ package config
 import (
 	"flag"
 	"fmt"
+	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/utils/constants"
+	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/utils/logger"
 	"os"
 
 	kafkaConfig "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/kafka"
-	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/utils/constants"
 	"github.com/pkg/errors"
 	"github.com/spf13/viper"
 )
@@ -19,6 +20,7 @@ func init() {
 
 type Config struct {
 	ServiceName string              `mapstructure:"serviceName"`
+	Logger      *logger.Config      `mapstructure:"logger"`
 	KafkaTopics KafkaTopics         `mapstructure:"kafkaTopics"`
 	Http        Http                `mapstructure:"http"`
 	Kafka       *kafkaConfig.Config `mapstructure:"kafka"`

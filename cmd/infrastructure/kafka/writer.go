@@ -1,7 +1,7 @@
 package kafka
 
 import (
-	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/utils/constants"
+	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/utils/constants"
 	"github.com/segmentio/kafka-go"
 	"github.com/segmentio/kafka-go/compress"
 )

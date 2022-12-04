@@ -2,8 +2,8 @@ package product
 
 import (
 	"context"
+	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/config"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/domain/product"
-	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/config"
 	producer "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/kafka"
 	protoProduct "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/product/proto"
 	"github.com/golang/protobuf/proto"
@@ -39,15 +39,15 @@ func (g *ProductKafkaGateway) Create(ctx context.Context, p product.Product) err
 }
 
 func newProductCreateKafkaMessage(p product.Product) *protoProduct.Product {
-	pbImages := make([]*protoProduct.ProductImage, len(p.ProductImages))
+	//pbImages := make([]*protoProduct.ProductImage, len(p.ProductImages))
 
-	for i, image := range p.ProductImages {
-		pi := &protoProduct.ProductImage{
-			Name:      image.Name,
-			ProductID: image.ProductID.String(),
-		}
-		pbImages[i] = pi
-	}
+	//for i, image := range p.ProductImages {
+	//	pi := &protoProduct.ProductImage{
+	//		Name:      image.Name,
+	//		ProductID: image.ProductID.String(),
+	//	}
+	//	pbImages[i] = pi
+	//}
 
 	return &protoProduct.Product{
 		ProductID:     p.ProductID.String(),
@@ -57,7 +57,7 @@ func newProductCreateKafkaMessage(p product.Product) *protoProduct.Product {
 		Price:         p.Price,
 		Quantity:      p.Quantity,
 		CategoryID:    p.CategoryID.String(),
-		ProductImages: pbImages,
+		ProductImages: nil,
 		Active:        p.Active,
 		CreatedAt:     p.CreatedAt.String(),
 		UpdatedAt:     "",

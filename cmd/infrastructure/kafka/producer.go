@@ -2,7 +2,7 @@ package kafka
 
 import (
 	"context"
-	"github.com/labstack/gommon/log"
+	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/utils/logger"
 	"github.com/segmentio/kafka-go"
 )
 
@@ -12,12 +12,13 @@ type Producer interface {
 }
 
 type producer struct {
+	log     logger.Logger
 	brokers []string
 	w       *kafka.Writer
 }
 
-func NewProducer(brokers []string) *producer {
-	return &producer{brokers: brokers, w: NewWriter(brokers, kafka.LoggerFunc(log.Errorf))}
+func NewProducer(log logger.Logger, brokers []string) *producer {
+	return &producer{log: log, brokers: brokers, w: NewWriter(brokers, kafka.LoggerFunc(log.Errorf))}
 }
 
 func (p *producer) PublishMessage(ctx context.Context, msgs ...kafka.Message) error {

@@ -1,7 +1,7 @@
 package server
 
 import (
-	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/utils/constants"
+	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/utils/constants"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/docs"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"

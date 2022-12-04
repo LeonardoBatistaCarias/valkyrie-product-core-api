@@ -8,6 +8,10 @@ http:
   debugHeaders: false
   httpClientDebug: false
   debugErrorsResponse: true
+logger:
+  level: debug
+  devMode: false
+  encoder: json
 kafka:
   brokers: [ "localhost:9092" ]
   groupID: product_core_writer_api_consumer

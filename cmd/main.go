@@ -2,8 +2,9 @@ package main
 
 import (
 	"flag"
-	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/config"
+	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/config"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/server"
+	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/utils/logger"
 	"github.com/labstack/gommon/log"
 )
 
@@ -15,6 +16,9 @@ func main() {
 		log.Fatal(err)
 	}
 
-	s := server.NewServer(cfg)
+	logger := logger.NewAppLogger(cfg.Logger)
+	logger.InitLogger()
+
+	s := server.NewServer(logger, cfg)
 	log.Fatal(s.Run())
 }

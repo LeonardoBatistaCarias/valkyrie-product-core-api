@@ -6,12 +6,12 @@ import (
 
 type CreateProductRequest struct {
 	ProductID   uuid.UUID
-	Name        string
-	Description string
-	Brand       int32
-	Price       float32
-	Quantity    int32
-	CategoryID  uuid.UUID
-	Active      bool
+	Name        string    `json:"name"`
+	Description string    `json:"description"`
+	Brand       int32     `json:"brand"`
+	Price       float32   `json:"price"`
+	Quantity    int32     `json:"quantity"`
+	CategoryID  uuid.UUID `json:"category_id"`
+	Active      bool      `json:"active"`
 	Images      [][]byte
 }
