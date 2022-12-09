@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "./;protoProduct";
+option go_package = "/model";
 
 message Product {
   string ProductID = 1;

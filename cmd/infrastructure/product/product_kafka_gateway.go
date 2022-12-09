@@ -5,7 +5,7 @@ import (
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/config"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/domain/product"
 	producer "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/kafka"
-	protoProduct "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/product/proto"
+	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/product/proto/pb/model"
 	"github.com/golang/protobuf/proto"
 	"github.com/segmentio/kafka-go"
 	"time"
@@ -38,7 +38,7 @@ func (g *ProductKafkaGateway) Create(ctx context.Context, p product.Product) err
 	})
 }
 
-func newProductCreateKafkaMessage(p product.Product) *protoProduct.Product {
+func newProductCreateKafkaMessage(p product.Product) *model.Product {
 	//pbImages := make([]*protoProduct.ProductImage, len(p.ProductImages))
 
 	//for i, image := range p.ProductImages {
@@ -49,7 +49,7 @@ func newProductCreateKafkaMessage(p product.Product) *protoProduct.Product {
 	//	pbImages[i] = pi
 	//}
 
-	return &protoProduct.Product{
+	return &model.Product{
 		ProductID:     p.ProductID.String(),
 		Name:          p.Name,
 		Description:   p.Description,
@@ -63,4 +63,19 @@ func newProductCreateKafkaMessage(p product.Product) *protoProduct.Product {
 		UpdatedAt:     "",
 		DeletedAt:     "",
 	}
+}
+
+func (g *ProductKafkaGateway) DeleteProductByID(ctx context.Context, p product.Product) error {
+	msg := newProductCreateKafkaMessage(p)
+
+	msgBytes, err := proto.Marshal(msg)
+	if err != nil {
+		return err
+	}
+
+	return g.producer.PublishMessage(ctx, kafka.Message{
+		Topic: g.cfg.KafkaTopics.ProductDelete.TopicName,
+		Value: msgBytes,
+		Time:  time.Now().UTC(),
+	})
 }

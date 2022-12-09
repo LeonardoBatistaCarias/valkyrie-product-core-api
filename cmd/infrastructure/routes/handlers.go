@@ -3,8 +3,8 @@ package routes
 import (
 	"context"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/application/commands"
-	commandModels "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/application/commands/models"
-	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/product/models"
+	commandModel "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/application/commands/model"
+	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/product/model"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/utils/logger"
 	"github.com/labstack/echo/v4"
 	uuid "github.com/satori/go.uuid"
@@ -28,15 +28,16 @@ func NewProductsHandlers(
 func (h *productsHandlers) CreateProduct() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		ctx := context.Background()
-		req := &models.CreateProductRequest{}
+
+		req := &model.CreateProductRequest{}
 		if err := c.Bind(req); err != nil {
 			h.log.WarnMsg("Bind", err)
 			return c.JSON(http.StatusBadRequest, err)
 		}
 		req.ProductID = uuid.NewV4()
-		createCommand := buildProductCommand(*req)
+		cmd := buildProductCommand(*req)
 
-		p, err := h.c.CreateProduct.Handle(ctx, *createCommand)
+		p, err := h.c.CreateProduct.Handle(ctx, *cmd)
 		if err != nil {
 			h.log.WarnMsg("Create Product", err)
 			return c.JSON(http.StatusBadRequest, err)
@@ -46,8 +47,8 @@ func (h *productsHandlers) CreateProduct() echo.HandlerFunc {
 	}
 }
 
-func buildProductCommand(req models.CreateProductRequest) *commandModels.ProductCommand {
-	return commandModels.NewProductCommand(
+func buildProductCommand(req model.CreateProductRequest) *commandModel.ProductCommand {
+	return commandModel.NewProductCommand(
 		req.ProductID,
 		req.Name,
 		req.Description,
@@ -58,4 +59,23 @@ func buildProductCommand(req models.CreateProductRequest) *commandModels.Product
 		nil,
 		req.Active,
 	)
+}
+
+func (h *productsHandlers) DeleteProductByID() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		ctx := context.Background()
+
+		productID, err := uuid.FromString(c.Param("id"))
+		if err != nil {
+			h.log.WarnMsg("uuid.FromString", err)
+			return c.JSON(http.StatusBadRequest, err)
+		}
+
+		if err := h.c.DeleteProduct.Handle(ctx, productID); err != nil {
+			h.log.WarnMsg("DeleteProduct", err)
+			return c.JSON(http.StatusBadRequest, err)
+		}
+		h.log.Infof("The product with ID %s has been deleted", productID)
+		return c.NoContent(http.StatusOK)
+	}
 }

@@ -23,6 +23,7 @@ type Config struct {
 	Logger      *logger.Config      `mapstructure:"logger"`
 	KafkaTopics KafkaTopics         `mapstructure:"kafkaTopics"`
 	Http        Http                `mapstructure:"http"`
+	Grpc        Grpc                `mapstructure:"grpc"`
 	Kafka       *kafkaConfig.Config `mapstructure:"kafka"`
 }
 
@@ -36,8 +37,13 @@ type Http struct {
 	DebugErrorsResponse bool   `mapstructure:"debugErrorsResponse"`
 }
 
+type Grpc struct {
+	ReaderServicePort string `mapstructure:"readerServicePort"`
+}
+
 type KafkaTopics struct {
 	ProductCreate kafkaConfig.TopicConfig `mapstructure:"productCreate"`
+	ProductDelete kafkaConfig.TopicConfig `mapstructure:"productDelete"`
 }
 
 func InitConfig() (*Config, error) {

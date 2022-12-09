@@ -1,17 +1,17 @@
-package create
+package commands
 
 import (
 	"context"
-	commandModels "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/application/commands/models"
+	commandModel "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/application/commands/model"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/domain/product"
-	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/product/models"
+	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/product/model"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/utils/logger"
 	"github.com/go-playground/validator"
 	"time"
 )
 
 type CreateProductCommandHandler interface {
-	Handle(ctx context.Context, cmd commandModels.ProductCommand) (*models.CreateProductResponse, error)
+	Handle(ctx context.Context, cmd commandModel.ProductCommand) (*model.CreateProductResponse, error)
 }
 
 type createProductHandler struct {
@@ -24,7 +24,7 @@ func NewCreateProductHandler(log logger.Logger, productGateway product.ProductGa
 	return &createProductHandler{log: log, gateway: productGateway, v: v}
 }
 
-func (c *createProductHandler) Handle(ctx context.Context, cmd commandModels.ProductCommand) (*models.CreateProductResponse, error) {
+func (c *createProductHandler) Handle(ctx context.Context, cmd commandModel.ProductCommand) (*model.CreateProductResponse, error) {
 	p := product.NewProduct(cmd.ProductID, cmd.Name, cmd.Description, product.Brand(cmd.Brand), cmd.Price, cmd.Quantity, cmd.CategoryID, cmd.Active, time.Now())
 
 	if err := c.v.StructCtx(ctx, p); err != nil {
@@ -37,5 +37,5 @@ func (c *createProductHandler) Handle(ctx context.Context, cmd commandModels.Pro
 		return nil, err
 	}
 
-	return models.NewCreateProductResponse(p.ProductID), nil
+	return model.NewCreateProductResponse(p.ProductID), nil
 }

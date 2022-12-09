@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option go_package = "/pb";
+
+import "product.proto";
+
+message CreateProductReq {
+  Product product = 1;
+}
+
+message CreateProductRes {
+  Product product = 1;
+}
+
+message GetProductByIDReq {
+  string ProductID = 1;
+}
+
+message GetProductByIDRes {
+  Product product = 1;
+}

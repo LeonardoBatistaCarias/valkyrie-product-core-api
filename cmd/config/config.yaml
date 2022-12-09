@@ -12,6 +12,8 @@ logger:
   level: debug
   devMode: false
   encoder: json
+grpc:
+  readerServicePort: 5003
 kafka:
   brokers: [ "localhost:9092" ]
   groupID: product_core_writer_api_consumer
@@ -19,5 +21,9 @@ kafka:
 kafkaTopics:
   productCreate:
     topicName: product_create
-    partitions: 10
+    partitions: 2
+    replicationFactor: 1
+  productDelete:
+    topicName: product_delete
+    partitions: 2
     replicationFactor: 1

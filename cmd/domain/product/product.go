@@ -1,6 +1,8 @@
 package product
 
 import (
+	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/product/proto/pb/model"
+	time_converter "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/utils/time"
 	uuid "github.com/satori/go.uuid"
 	"time"
 )
@@ -45,4 +47,31 @@ func NewProduct(
 		UpdatedAt: nil,
 		DeletedAt: nil,
 	}
+}
+
+func ProductFromGrpcMessage(p model.Product) *Product {
+	return &Product{
+		ProductID:   uuid.FromStringOrNil(p.ProductID),
+		Name:        p.Name,
+		Description: p.Description,
+		Brand:       Brand(p.Brand),
+		Price:       p.Price,
+		Quantity:    p.Quantity,
+		CategoryID:  uuid.FromStringOrNil(p.CategoryID),
+		//ProductImages: images,
+		Active:    p.Active,
+		CreatedAt: *time_converter.TimeRFC3339From(p.CreatedAt),
+		UpdatedAt: time_converter.TimeRFC3339From(p.UpdatedAt),
+		DeletedAt: time_converter.TimeRFC3339From(p.DeletedAt),
+	}
+}
+
+func (p *Product) Deactivate() {
+	actualDate := time.Now()
+	if p.DeletedAt == nil || p.DeletedAt.Before(p.CreatedAt) {
+
+		p.DeletedAt = &actualDate
+	}
+	p.Active = false
+	p.UpdatedAt = &actualDate
 }

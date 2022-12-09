@@ -4,8 +4,10 @@ import (
 	"context"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/application/commands"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/config"
+	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/grpc"
 	kafkaClient "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/kafka"
 	gateway "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/product"
+	grpc_reader "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/product/service/grpc"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/routes"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/utils/logger"
 	"github.com/go-playground/validator"
@@ -46,8 +48,16 @@ func (s *server) Run() error {
 	if s.cfg.Kafka.InitTopics {
 		s.initKafkaTopics(ctx)
 	}
+
+	rc, err := grpc.NewReaderServiceClient(ctx, s.cfg)
+	if err != nil {
+		s.log.Errorf("Error in connecting grpc reader service PORT ", err)
+		return err
+	}
+	rs := grpc_reader.NewReaderService(rc)
+
 	kafkaGateway := gateway.NewProductKafkaGateway(s.cfg, kafkaProducer)
-	commands := commands.NewCommands(s.log, kafkaGateway, s.v)
+	commands := commands.NewCommands(s.log, kafkaGateway, s.v, *rs)
 
 	productHandlers := routes.NewProductsHandlers(s.echo.Group(s.cfg.Http.ProductsPath), s.log, *commands)
 	productHandlers.MapRoutes()
