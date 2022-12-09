@@ -23,8 +23,8 @@ func NewProductKafkaGateway(cfg *config.Config, producer producer.Producer) *Pro
 	}
 }
 
-func (g *ProductKafkaGateway) Create(ctx context.Context, p product.Product) error {
-	msg := newProductCreateKafkaMessage(p)
+func (g *ProductKafkaGateway) CreateProduct(ctx context.Context, p product.Product) error {
+	msg := newProductKafkaMessage(p)
 
 	msgBytes, err := proto.Marshal(msg)
 	if err != nil {
@@ -38,7 +38,37 @@ func (g *ProductKafkaGateway) Create(ctx context.Context, p product.Product) err
 	})
 }
 
-func newProductCreateKafkaMessage(p product.Product) *model.Product {
+func (g *ProductKafkaGateway) DeleteProductByID(ctx context.Context, p product.Product) error {
+	msg := newProductKafkaMessage(p)
+
+	msgBytes, err := proto.Marshal(msg)
+	if err != nil {
+		return err
+	}
+
+	return g.producer.PublishMessage(ctx, kafka.Message{
+		Topic: g.cfg.KafkaTopics.ProductDelete.TopicName,
+		Value: msgBytes,
+		Time:  time.Now().UTC(),
+	})
+}
+
+func (g *ProductKafkaGateway) UpdateProductByID(ctx context.Context, p product.Product) error {
+	msg := newProductKafkaMessage(p)
+
+	msgBytes, err := proto.Marshal(msg)
+	if err != nil {
+		return err
+	}
+
+	return g.producer.PublishMessage(ctx, kafka.Message{
+		Topic: g.cfg.KafkaTopics.ProductUpdate.TopicName,
+		Value: msgBytes,
+		Time:  time.Now().UTC(),
+	})
+}
+
+func newProductKafkaMessage(p product.Product) *model.Product {
 	//pbImages := make([]*protoProduct.ProductImage, len(p.ProductImages))
 
 	//for i, image := range p.ProductImages {
@@ -63,19 +93,4 @@ func newProductCreateKafkaMessage(p product.Product) *model.Product {
 		UpdatedAt:     "",
 		DeletedAt:     "",
 	}
-}
-
-func (g *ProductKafkaGateway) DeleteProductByID(ctx context.Context, p product.Product) error {
-	msg := newProductCreateKafkaMessage(p)
-
-	msgBytes, err := proto.Marshal(msg)
-	if err != nil {
-		return err
-	}
-
-	return g.producer.PublishMessage(ctx, kafka.Message{
-		Topic: g.cfg.KafkaTopics.ProductDelete.TopicName,
-		Value: msgBytes,
-		Time:  time.Now().UTC(),
-	})
 }

@@ -8,13 +8,15 @@ import (
 )
 
 type Commands struct {
-	CreateProduct CreateProductCommandHandler
-	DeleteProduct DeleteProductCommandHandler
+	CreateProduct     CreateProductCommandHandler
+	DeleteProductByID DeleteProductByIDCommandHandler
+	UpdateProductByID UpdateProductByIDCommandHandler
 }
 
 func NewCommands(log logger.Logger, kafkaGateway *product.ProductKafkaGateway, v *validator.Validate, rs grpc.ReaderService) *Commands {
 	createHandler := NewCreateProductHandler(log, kafkaGateway, v)
-	deleteHandler := NewDeleteProductHandler(log, kafkaGateway, v, rs)
+	deleteHandler := NewDeleteProductByIDHandler(log, kafkaGateway, v, rs)
+	updateHandler := NewUpdateProductByIDHandler(log, kafkaGateway, v, rs)
 
-	return &Commands{CreateProduct: createHandler, DeleteProduct: deleteHandler}
+	return &Commands{CreateProduct: createHandler, DeleteProductByID: deleteHandler, UpdateProductByID: updateHandler}
 }

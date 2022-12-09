@@ -32,7 +32,7 @@ func (c *createProductHandler) Handle(ctx context.Context, cmd commandModel.Prod
 		return nil, err
 	}
 
-	if err := c.gateway.Create(ctx, *p); err != nil {
+	if err := c.gateway.CreateProduct(ctx, *p); err != nil {
 		c.log.Errorf("Error in generating a novelty in ProductCreate topic", err)
 		return nil, err
 	}

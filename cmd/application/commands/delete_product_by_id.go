@@ -9,22 +9,22 @@ import (
 	uuid "github.com/satori/go.uuid"
 )
 
-type DeleteProductCommandHandler interface {
+type DeleteProductByIDCommandHandler interface {
 	Handle(ctx context.Context, productID uuid.UUID) error
 }
 
-type deleteProductHandler struct {
+type deleteProductByIDHandler struct {
 	log     logger.Logger
 	gateway product.ProductGateway
 	v       *validator.Validate
 	rs      grpc.ReaderService
 }
 
-func NewDeleteProductHandler(log logger.Logger, productGateway product.ProductGateway, v *validator.Validate, rs grpc.ReaderService) *deleteProductHandler {
-	return &deleteProductHandler{log: log, gateway: productGateway, v: v, rs: rs}
+func NewDeleteProductByIDHandler(log logger.Logger, productGateway product.ProductGateway, v *validator.Validate, rs grpc.ReaderService) *deleteProductByIDHandler {
+	return &deleteProductByIDHandler{log: log, gateway: productGateway, v: v, rs: rs}
 }
 
-func (c *deleteProductHandler) Handle(ctx context.Context, productID uuid.UUID) error {
+func (c *deleteProductByIDHandler) Handle(ctx context.Context, productID uuid.UUID) error {
 	p, err := c.rs.GetProductByID(productID)
 	if err != nil {
 		c.log.Errorf("A product with ID: %s doesn't exist.", productID.String())
@@ -33,7 +33,7 @@ func (c *deleteProductHandler) Handle(ctx context.Context, productID uuid.UUID) 
 
 	p.Deactivate()
 	if err := c.gateway.DeleteProductByID(ctx, *p); err != nil {
-		c.log.Errorf("Error in generating a novelty in ProductCreate topic", err)
+		c.log.Errorf("Error in generating a novelty in DeleteProduct topic", err)
 		return err
 	}
 
