@@ -84,8 +84,8 @@ func (h *productsHandlers) DeactivateProductByID() echo.HandlerFunc {
 			return c.JSON(http.StatusBadRequest, err)
 		}
 
-		if err := h.c.DeleteProductByID.Handle(ctx, productID); err != nil {
-			h.log.WarnMsg("DeleteProductById", err)
+		if err := h.c.DeactivateProductByID.Handle(ctx, productID); err != nil {
+			h.log.WarnMsg("DeactivateProductByID", err)
 			h.metrics.ErrorHttpRequests.Inc()
 			return c.JSON(http.StatusBadRequest, err)
 		}
