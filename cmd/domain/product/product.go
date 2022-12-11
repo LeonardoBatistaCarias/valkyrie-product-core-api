@@ -69,7 +69,6 @@ func ProductFromGrpcMessage(p model.Product) *Product {
 func (p *Product) Deactivate() {
 	actualDate := time.Now()
 	if p.DeletedAt == nil || p.DeletedAt.Before(p.CreatedAt) {
-
 		p.DeletedAt = &actualDate
 	}
 	p.Active = false

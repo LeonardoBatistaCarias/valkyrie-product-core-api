@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/application/commands"
 	commandModel "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/application/commands/model"
+	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/metrics"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/product/model"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/utils/logger"
 	"github.com/labstack/echo/v4"
@@ -12,17 +13,19 @@ import (
 )
 
 type productsHandlers struct {
-	group *echo.Group
-	log   logger.Logger
-	c     commands.Commands
+	group   *echo.Group
+	log     logger.Logger
+	c       commands.Commands
+	metrics *metrics.Metrics
 }
 
 func NewProductsHandlers(
 	group *echo.Group,
 	log logger.Logger,
 	c commands.Commands,
+	metrics *metrics.Metrics,
 ) *productsHandlers {
-	return &productsHandlers{group: group, log: log, c: c}
+	return &productsHandlers{group: group, log: log, c: c, metrics: metrics}
 }
 
 func (h *productsHandlers) CreateProduct() echo.HandlerFunc {
@@ -35,30 +38,18 @@ func (h *productsHandlers) CreateProduct() echo.HandlerFunc {
 			return c.JSON(http.StatusBadRequest, err)
 		}
 		req.ProductID = uuid.NewV4()
-		cmd := buildProductCommand(*req)
+		cmd := commandModel.NewProductCommandToCreate(*req)
 
 		p, err := h.c.CreateProduct.Handle(ctx, *cmd)
 		if err != nil {
 			h.log.WarnMsg("Create Product", err)
+			h.metrics.ErrorHttpRequests.Inc()
 			return c.JSON(http.StatusBadRequest, err)
 		}
 
+		h.metrics.SuccessHttpRequests.Inc()
 		return c.JSON(http.StatusCreated, p)
 	}
-}
-
-func buildProductCommand(req model.CreateProductRequest) *commandModel.ProductCommand {
-	return commandModel.NewProductCommand(
-		req.ProductID,
-		req.Name,
-		req.Description,
-		req.Brand,
-		req.Price,
-		req.Quantity,
-		req.CategoryID,
-		nil,
-		req.Active,
-	)
 }
 
 func (h *productsHandlers) DeleteProductByID() echo.HandlerFunc {
@@ -90,30 +81,22 @@ func (h *productsHandlers) UpdateProductByID() echo.HandlerFunc {
 			h.log.WarnMsg("Bind", err)
 			return c.JSON(http.StatusBadRequest, err)
 		}
-		req.ProductID = uuid.NewV4()
-		cmd := buildUpdateProductCommand(*req)
 
-		p, err := h.c.CreateProduct.Handle(ctx, *cmd)
+		productID, err := uuid.FromString(c.Param("id"))
 		if err != nil {
-			h.log.WarnMsg("Create Product", err)
+			h.log.WarnMsg("Update Product", err)
+			return c.JSON(http.StatusBadRequest, err)
+		}
+
+		req.ProductID = productID
+		cmd := commandModel.NewProductCommandToUpdate(*req)
+		p, err := h.c.UpdateProductByID.Handle(ctx, *cmd)
+		if err != nil {
+			h.log.WarnMsg("Update Product", err)
 			return c.JSON(http.StatusBadRequest, err)
 		}
 
 		h.log.Infof("The product with ID %s has been updated", req.ProductID)
 		return c.JSON(http.StatusOK, p)
 	}
-}
-
-func buildUpdateProductCommand(req model.UpdateProductRequest) *commandModel.ProductCommand {
-	return commandModel.NewProductCommand(
-		req.ProductID,
-		req.Name,
-		req.Description,
-		req.Brand,
-		req.Price,
-		req.Quantity,
-		req.CategoryID,
-		nil,
-		req.Active,
-	)
 }

@@ -6,6 +6,7 @@ import (
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/config"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/grpc"
 	kafkaClient "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/kafka"
+	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/metrics"
 	gateway "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/product"
 	grpc_reader "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/product/service/grpc"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/routes"
@@ -26,6 +27,7 @@ type server struct {
 	echo      *echo.Echo
 	kafkaConn *kafka.Conn
 	v         *validator.Validate
+	m         *metrics.Metrics
 }
 
 func NewServer(log logger.Logger, cfg *config.Config) *server {
@@ -35,6 +37,8 @@ func NewServer(log logger.Logger, cfg *config.Config) *server {
 func (s *server) Run() error {
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM, syscall.SIGINT)
 	defer cancel()
+
+	s.m = metrics.NewMetrics(s.cfg)
 
 	kafkaProducer := kafkaClient.NewProducer(s.log, s.cfg.Kafka.Brokers)
 	defer kafkaProducer.Close()
@@ -59,7 +63,7 @@ func (s *server) Run() error {
 	kafkaGateway := gateway.NewProductKafkaGateway(s.cfg, kafkaProducer)
 	commands := commands.NewCommands(s.log, kafkaGateway, s.v, *rs)
 
-	productHandlers := routes.NewProductsHandlers(s.echo.Group(s.cfg.Http.ProductsPath), s.log, *commands)
+	productHandlers := routes.NewProductsHandlers(s.echo.Group(s.cfg.Http.ProductsPath), s.log, *commands, s.m)
 	productHandlers.MapRoutes()
 
 	go func() {
@@ -69,6 +73,8 @@ func (s *server) Run() error {
 		}
 	}()
 	s.log.Infof("Valkyrie Product Core on PORT: %s", s.cfg.Http.Port)
+
+	s.runMetrics(cancel)
 
 	<-ctx.Done()
 

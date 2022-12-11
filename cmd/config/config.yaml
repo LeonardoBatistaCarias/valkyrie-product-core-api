@@ -31,3 +31,11 @@ kafkaTopics:
     topicName: product_update
     partitions: 2
     replicationFactor: 1
+prometheus:
+  readinessPath: /ready
+  livenessPath: /live
+  port: :3001
+  pprof: :6001
+  prometheusPath: /metrics
+  prometheusPort: :8001
+  checkIntervalSeconds: 10
