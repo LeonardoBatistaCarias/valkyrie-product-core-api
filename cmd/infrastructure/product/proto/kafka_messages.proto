@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option go_package = "/pb";
+
+message DeleteProductByIDKafkaMessage {
+  string productID = 1;
+}
+
+message DeactivateProductByIDKafkaMessage {
+  string productID = 1;
+}

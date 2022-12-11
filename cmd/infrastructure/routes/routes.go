@@ -8,6 +8,7 @@ import (
 func (h *productsHandlers) MapRoutes() {
 	h.group.POST("", h.CreateProduct())
 	h.group.DELETE("/:id", h.DeleteProductByID())
+	h.group.PATCH("/deactivate/:id", h.DeactivateProductByID())
 	h.group.PUT("/:id", h.UpdateProductByID())
 	h.group.Any("/ping", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, "Pong")

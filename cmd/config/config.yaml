@@ -31,6 +31,10 @@ kafkaTopics:
     topicName: product_update
     partitions: 2
     replicationFactor: 1
+  productDeactivate:
+    topicName: product_deactivate
+    partitions: 2
+    replicationFactor: 1
 prometheus:
   readinessPath: /ready
   livenessPath: /live

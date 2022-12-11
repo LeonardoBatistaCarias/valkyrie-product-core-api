@@ -64,10 +64,34 @@ func (h *productsHandlers) DeleteProductByID() echo.HandlerFunc {
 
 		if err := h.c.DeleteProductByID.Handle(ctx, productID); err != nil {
 			h.log.WarnMsg("DeleteProductById", err)
+			h.metrics.ErrorHttpRequests.Inc()
 			return c.JSON(http.StatusBadRequest, err)
 		}
 
 		h.log.Infof("The product with ID %s has been deleted", productID)
+		h.metrics.SuccessHttpRequests.Inc()
+		return c.NoContent(http.StatusOK)
+	}
+}
+
+func (h *productsHandlers) DeactivateProductByID() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		ctx := context.Background()
+
+		productID, err := uuid.FromString(c.Param("id"))
+		if err != nil {
+			h.log.WarnMsg("uuid.FromString", err)
+			return c.JSON(http.StatusBadRequest, err)
+		}
+
+		if err := h.c.DeleteProductByID.Handle(ctx, productID); err != nil {
+			h.log.WarnMsg("DeleteProductById", err)
+			h.metrics.ErrorHttpRequests.Inc()
+			return c.JSON(http.StatusBadRequest, err)
+		}
+
+		h.log.Infof("The product with ID %s has been deleted", productID)
+		h.metrics.SuccessHttpRequests.Inc()
 		return c.NoContent(http.StatusOK)
 	}
 }
@@ -93,10 +117,12 @@ func (h *productsHandlers) UpdateProductByID() echo.HandlerFunc {
 		p, err := h.c.UpdateProductByID.Handle(ctx, *cmd)
 		if err != nil {
 			h.log.WarnMsg("Update Product", err)
+			h.metrics.ErrorHttpRequests.Inc()
 			return c.JSON(http.StatusBadRequest, err)
 		}
 
 		h.log.Infof("The product with ID %s has been updated", req.ProductID)
+		h.metrics.SuccessHttpRequests.Inc()
 		return c.JSON(http.StatusOK, p)
 	}
 }
