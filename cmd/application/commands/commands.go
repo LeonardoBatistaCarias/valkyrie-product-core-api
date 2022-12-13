@@ -14,7 +14,7 @@ type Commands struct {
 	UpdateProductByID     UpdateProductByIDCommandHandler
 }
 
-func NewCommands(log logger.Logger, kafkaGateway *product.ProductKafkaGateway, v *validator.Validate, rs grpc.ReaderService) *Commands {
+func NewCommands(log logger.Logger, kafkaGateway *product.ProductKafkaGateway, v *validator.Validate, rs *grpc.ReaderService) *Commands {
 	createHandler := NewCreateProductHandler(log, kafkaGateway, v)
 	deleteHandler := NewDeleteProductByIDHandler(log, kafkaGateway, v, rs)
 	deactivateHandler := NewDeactivateProductByIDHandler(log, kafkaGateway, v, rs)

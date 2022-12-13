@@ -17,10 +17,10 @@ type deactivateProductByIDHandler struct {
 	log     logger.Logger
 	gateway product.ProductGateway
 	v       *validator.Validate
-	rs      grpc.ReaderService
+	rs      *grpc.ReaderService
 }
 
-func NewDeactivateProductByIDHandler(log logger.Logger, productGateway product.ProductGateway, v *validator.Validate, rs grpc.ReaderService) *deactivateProductByIDHandler {
+func NewDeactivateProductByIDHandler(log logger.Logger, productGateway product.ProductGateway, v *validator.Validate, rs *grpc.ReaderService) *deactivateProductByIDHandler {
 	return &deactivateProductByIDHandler{log: log, gateway: productGateway, v: v, rs: rs}
 }
 

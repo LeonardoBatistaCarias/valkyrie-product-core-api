@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/config"
-	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/product/proto/pb"
+	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/product/grpc/pb/reader_service"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/utils/constants"
 	grpc_retry "github.com/grpc-ecosystem/go-grpc-middleware/retry"
 	"github.com/pkg/errors"
@@ -12,14 +12,14 @@ import (
 	"google.golang.org/grpc/codes"
 )
 
-func NewReaderServiceClient(ctx context.Context, cfg *config.Config) (pb.ProductReaderServiceClient, error) {
+func NewReaderServiceClient(ctx context.Context, cfg *config.Config) (reader_service.ProductReaderServiceClient, error) {
 	readerServiceConn, err := newReaderServiceConn(ctx, cfg)
 	if err != nil {
 		return nil, err
 	}
 	//defer readerServiceConn.Close()
 
-	return pb.NewProductReaderServiceClient(readerServiceConn), nil
+	return reader_service.NewProductReaderServiceClient(readerServiceConn), nil
 }
 
 func newReaderServiceConn(ctx context.Context, cfg *config.Config) (*grpc.ClientConn, error) {

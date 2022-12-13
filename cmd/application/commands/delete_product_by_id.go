@@ -17,10 +17,10 @@ type deleteProductByIDHandler struct {
 	log     logger.Logger
 	gateway product.ProductGateway
 	v       *validator.Validate
-	rs      grpc.ReaderService
+	rs      *grpc.ReaderService
 }
 
-func NewDeleteProductByIDHandler(log logger.Logger, productGateway product.ProductGateway, v *validator.Validate, rs grpc.ReaderService) *deleteProductByIDHandler {
+func NewDeleteProductByIDHandler(log logger.Logger, productGateway product.ProductGateway, v *validator.Validate, rs *grpc.ReaderService) *deleteProductByIDHandler {
 	return &deleteProductByIDHandler{log: log, gateway: productGateway, v: v, rs: rs}
 }
 

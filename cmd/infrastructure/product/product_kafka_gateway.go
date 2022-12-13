@@ -5,8 +5,8 @@ import (
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/config"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/domain/product"
 	producer "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/kafka"
-	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/product/proto/pb"
-	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/product/proto/pb/model"
+	kafkaMessage "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/product/grpc/pb/kafka"
+	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/product/grpc/pb/model"
 	"github.com/golang/protobuf/proto"
 	uuid "github.com/satori/go.uuid"
 	"github.com/segmentio/kafka-go"
@@ -41,7 +41,7 @@ func (g *ProductKafkaGateway) CreateProduct(ctx context.Context, p product.Produ
 }
 
 func (g *ProductKafkaGateway) DeleteProductByID(ctx context.Context, productID uuid.UUID) error {
-	msg := &pb.DeactivateProductByIDKafkaMessage{ProductID: productID.String()}
+	msg := &kafkaMessage.DeactivateProductByIDKafkaMessage{ProductID: productID.String()}
 
 	msgBytes, err := proto.Marshal(msg)
 	if err != nil {
@@ -56,7 +56,7 @@ func (g *ProductKafkaGateway) DeleteProductByID(ctx context.Context, productID u
 }
 
 func (g *ProductKafkaGateway) DeactivateProductByID(ctx context.Context, productID uuid.UUID) error {
-	msg := &pb.DeactivateProductByIDKafkaMessage{ProductID: productID.String()}
+	msg := &kafkaMessage.DeactivateProductByIDKafkaMessage{ProductID: productID.String()}
 	msgBytes, err := proto.Marshal(msg)
 	if err != nil {
 		return err

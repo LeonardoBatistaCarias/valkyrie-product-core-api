@@ -2,15 +2,13 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.21.9
-// source: product_reader.proto
+// source: proto/reader_service/product_reader.proto
 
-package pb
+package reader_service
 
 import (
 	context "context"
 	grpc "google.golang.org/grpc"
-	codes "google.golang.org/grpc/codes"
-	status "google.golang.org/grpc/status"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -43,27 +41,9 @@ func (c *productReaderServiceClient) GetProductByID(ctx context.Context, in *Get
 }
 
 // ProductReaderServiceServer is the server API for ProductReaderService service.
-// All implementations must embed UnimplementedProductReaderServiceServer
 // for forward compatibility
 type ProductReaderServiceServer interface {
 	GetProductByID(context.Context, *GetProductByIDReq) (*GetProductByIDRes, error)
-	mustEmbedUnimplementedProductReaderServiceServer()
-}
-
-// UnimplementedProductReaderServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedProductReaderServiceServer struct {
-}
-
-func (UnimplementedProductReaderServiceServer) GetProductByID(context.Context, *GetProductByIDReq) (*GetProductByIDRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetProductByID not implemented")
-}
-func (UnimplementedProductReaderServiceServer) mustEmbedUnimplementedProductReaderServiceServer() {}
-
-// UnsafeProductReaderServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to ProductReaderServiceServer will
-// result in compilation errors.
-type UnsafeProductReaderServiceServer interface {
-	mustEmbedUnimplementedProductReaderServiceServer()
 }
 
 func RegisterProductReaderServiceServer(s grpc.ServiceRegistrar, srv ProductReaderServiceServer) {
@@ -101,5 +81,5 @@ var ProductReaderService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "product_reader.proto",
+	Metadata: "proto/reader_service/product_reader.proto",
 }

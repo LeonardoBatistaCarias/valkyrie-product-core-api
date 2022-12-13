@@ -61,7 +61,7 @@ func (s *server) Run() error {
 	rs := grpc_reader.NewReaderService(rc)
 
 	kafkaGateway := gateway.NewProductKafkaGateway(s.cfg, kafkaProducer)
-	commands := commands.NewCommands(s.log, kafkaGateway, s.v, *rs)
+	commands := commands.NewCommands(s.log, kafkaGateway, s.v, rs)
 
 	productHandlers := routes.NewProductsHandlers(s.echo.Group(s.cfg.Http.ProductsPath), s.log, *commands, s.m)
 	productHandlers.MapRoutes()
