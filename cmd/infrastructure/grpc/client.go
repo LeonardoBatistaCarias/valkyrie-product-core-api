@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/config"
-	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/product/grpc/pb/reader_service"
+	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/grpc/pb/reader_service"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/utils/constants"
 	grpc_retry "github.com/grpc-ecosystem/go-grpc-middleware/retry"
 	"github.com/pkg/errors"

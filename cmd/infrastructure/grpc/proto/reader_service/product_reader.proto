@@ -1,10 +1,8 @@
 syntax = "proto3";
 
-package productReader;
-
 option go_package = "/reader_service";
 
-import "reader_service/product_reader_messages.proto";
+import "proto/reader_service/product_reader_messages.proto";
 
 service ProductReaderService {
   rpc GetProductByID(GetProductByIDReq) returns (GetProductByIDRes) {};

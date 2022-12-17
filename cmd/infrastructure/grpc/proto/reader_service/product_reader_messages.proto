@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-option go_package = "/pb";
+option go_package = "/reader_service";
 
-import "model/product.proto";
+import "proto/model/product.proto";
 
 message CreateProductReq {
   Product product = 1;

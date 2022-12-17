@@ -2,12 +2,12 @@
 // versions:
 // 	protoc-gen-go v1.28.1
 // 	protoc        v3.21.9
-// source: reader_service/product_reader_messages.proto
+// source: proto/reader_service/product_reader_messages.proto
 
 package reader_service
 
 import (
-	model "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/product/grpc/pb/model"
+	model "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/grpc/pb/model"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -32,7 +32,7 @@ type CreateProductReq struct {
 func (x *CreateProductReq) Reset() {
 	*x = CreateProductReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_reader_service_product_reader_messages_proto_msgTypes[0]
+		mi := &file_proto_reader_service_product_reader_messages_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -45,7 +45,7 @@ func (x *CreateProductReq) String() string {
 func (*CreateProductReq) ProtoMessage() {}
 
 func (x *CreateProductReq) ProtoReflect() protoreflect.Message {
-	mi := &file_reader_service_product_reader_messages_proto_msgTypes[0]
+	mi := &file_proto_reader_service_product_reader_messages_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -58,7 +58,7 @@ func (x *CreateProductReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateProductReq.ProtoReflect.Descriptor instead.
 func (*CreateProductReq) Descriptor() ([]byte, []int) {
-	return file_reader_service_product_reader_messages_proto_rawDescGZIP(), []int{0}
+	return file_proto_reader_service_product_reader_messages_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *CreateProductReq) GetProduct() *model.Product {
@@ -79,7 +79,7 @@ type CreateProductRes struct {
 func (x *CreateProductRes) Reset() {
 	*x = CreateProductRes{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_reader_service_product_reader_messages_proto_msgTypes[1]
+		mi := &file_proto_reader_service_product_reader_messages_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -92,7 +92,7 @@ func (x *CreateProductRes) String() string {
 func (*CreateProductRes) ProtoMessage() {}
 
 func (x *CreateProductRes) ProtoReflect() protoreflect.Message {
-	mi := &file_reader_service_product_reader_messages_proto_msgTypes[1]
+	mi := &file_proto_reader_service_product_reader_messages_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -105,7 +105,7 @@ func (x *CreateProductRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateProductRes.ProtoReflect.Descriptor instead.
 func (*CreateProductRes) Descriptor() ([]byte, []int) {
-	return file_reader_service_product_reader_messages_proto_rawDescGZIP(), []int{1}
+	return file_proto_reader_service_product_reader_messages_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *CreateProductRes) GetProduct() *model.Product {
@@ -126,7 +126,7 @@ type GetProductByIDReq struct {
 func (x *GetProductByIDReq) Reset() {
 	*x = GetProductByIDReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_reader_service_product_reader_messages_proto_msgTypes[2]
+		mi := &file_proto_reader_service_product_reader_messages_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -139,7 +139,7 @@ func (x *GetProductByIDReq) String() string {
 func (*GetProductByIDReq) ProtoMessage() {}
 
 func (x *GetProductByIDReq) ProtoReflect() protoreflect.Message {
-	mi := &file_reader_service_product_reader_messages_proto_msgTypes[2]
+	mi := &file_proto_reader_service_product_reader_messages_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -152,7 +152,7 @@ func (x *GetProductByIDReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetProductByIDReq.ProtoReflect.Descriptor instead.
 func (*GetProductByIDReq) Descriptor() ([]byte, []int) {
-	return file_reader_service_product_reader_messages_proto_rawDescGZIP(), []int{2}
+	return file_proto_reader_service_product_reader_messages_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *GetProductByIDReq) GetProductID() string {
@@ -173,7 +173,7 @@ type GetProductByIDRes struct {
 func (x *GetProductByIDRes) Reset() {
 	*x = GetProductByIDRes{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_reader_service_product_reader_messages_proto_msgTypes[3]
+		mi := &file_proto_reader_service_product_reader_messages_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -186,7 +186,7 @@ func (x *GetProductByIDRes) String() string {
 func (*GetProductByIDRes) ProtoMessage() {}
 
 func (x *GetProductByIDRes) ProtoReflect() protoreflect.Message {
-	mi := &file_reader_service_product_reader_messages_proto_msgTypes[3]
+	mi := &file_proto_reader_service_product_reader_messages_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -199,7 +199,7 @@ func (x *GetProductByIDRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetProductByIDRes.ProtoReflect.Descriptor instead.
 func (*GetProductByIDRes) Descriptor() ([]byte, []int) {
-	return file_reader_service_product_reader_messages_proto_rawDescGZIP(), []int{3}
+	return file_proto_reader_service_product_reader_messages_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *GetProductByIDRes) GetProduct() *model.Product {
@@ -209,52 +209,53 @@ func (x *GetProductByIDRes) GetProduct() *model.Product {
 	return nil
 }
 
-var File_reader_service_product_reader_messages_proto protoreflect.FileDescriptor
+var File_proto_reader_service_product_reader_messages_proto protoreflect.FileDescriptor
 
-var file_reader_service_product_reader_messages_proto_rawDesc = []byte{
-	0x0a, 0x2c, 0x72, 0x65, 0x61, 0x64, 0x65, 0x72, 0x5f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65,
-	0x2f, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x5f, 0x72, 0x65, 0x61, 0x64, 0x65, 0x72, 0x5f,
-	0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x19,
-	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x6d, 0x6f, 0x64, 0x65, 0x6c, 0x2f, 0x70, 0x72, 0x6f, 0x64,
-	0x75, 0x63, 0x74, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x36, 0x0a, 0x10, 0x43, 0x72, 0x65,
-	0x61, 0x74, 0x65, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x52, 0x65, 0x71, 0x12, 0x22, 0x0a,
-	0x07, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x08,
-	0x2e, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x52, 0x07, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63,
-	0x74, 0x22, 0x36, 0x0a, 0x10, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x50, 0x72, 0x6f, 0x64, 0x75,
-	0x63, 0x74, 0x52, 0x65, 0x73, 0x12, 0x22, 0x0a, 0x07, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74,
-	0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x08, 0x2e, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74,
-	0x52, 0x07, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x22, 0x31, 0x0a, 0x11, 0x47, 0x65, 0x74,
-	0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x42, 0x79, 0x49, 0x44, 0x52, 0x65, 0x71, 0x12, 0x1c,
-	0x0a, 0x09, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x49, 0x44, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x09, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x49, 0x44, 0x22, 0x37, 0x0a, 0x11,
-	0x47, 0x65, 0x74, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x42, 0x79, 0x49, 0x44, 0x52, 0x65,
-	0x73, 0x12, 0x22, 0x0a, 0x07, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x0b, 0x32, 0x08, 0x2e, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x52, 0x07, 0x70, 0x72,
-	0x6f, 0x64, 0x75, 0x63, 0x74, 0x42, 0x11, 0x5a, 0x0f, 0x2f, 0x72, 0x65, 0x61, 0x64, 0x65, 0x72,
-	0x5f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+var file_proto_reader_service_product_reader_messages_proto_rawDesc = []byte{
+	0x0a, 0x32, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x72, 0x65, 0x61, 0x64, 0x65, 0x72, 0x5f, 0x73,
+	0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x5f, 0x72,
+	0x65, 0x61, 0x64, 0x65, 0x72, 0x5f, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x73, 0x2e, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x19, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x6d, 0x6f, 0x64, 0x65,
+	0x6c, 0x2f, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22,
+	0x36, 0x0a, 0x10, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74,
+	0x52, 0x65, 0x71, 0x12, 0x22, 0x0a, 0x07, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x08, 0x2e, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x52, 0x07,
+	0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x22, 0x36, 0x0a, 0x10, 0x43, 0x72, 0x65, 0x61, 0x74,
+	0x65, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x52, 0x65, 0x73, 0x12, 0x22, 0x0a, 0x07, 0x70,
+	0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x08, 0x2e, 0x50,
+	0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x52, 0x07, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x22,
+	0x31, 0x0a, 0x11, 0x47, 0x65, 0x74, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x42, 0x79, 0x49,
+	0x44, 0x52, 0x65, 0x71, 0x12, 0x1c, 0x0a, 0x09, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x49,
+	0x44, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74,
+	0x49, 0x44, 0x22, 0x37, 0x0a, 0x11, 0x47, 0x65, 0x74, 0x50, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74,
+	0x42, 0x79, 0x49, 0x44, 0x52, 0x65, 0x73, 0x12, 0x22, 0x0a, 0x07, 0x70, 0x72, 0x6f, 0x64, 0x75,
+	0x63, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x08, 0x2e, 0x50, 0x72, 0x6f, 0x64, 0x75,
+	0x63, 0x74, 0x52, 0x07, 0x70, 0x72, 0x6f, 0x64, 0x75, 0x63, 0x74, 0x42, 0x11, 0x5a, 0x0f, 0x2f,
+	0x72, 0x65, 0x61, 0x64, 0x65, 0x72, 0x5f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x62, 0x06,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
-	file_reader_service_product_reader_messages_proto_rawDescOnce sync.Once
-	file_reader_service_product_reader_messages_proto_rawDescData = file_reader_service_product_reader_messages_proto_rawDesc
+	file_proto_reader_service_product_reader_messages_proto_rawDescOnce sync.Once
+	file_proto_reader_service_product_reader_messages_proto_rawDescData = file_proto_reader_service_product_reader_messages_proto_rawDesc
 )
 
-func file_reader_service_product_reader_messages_proto_rawDescGZIP() []byte {
-	file_reader_service_product_reader_messages_proto_rawDescOnce.Do(func() {
-		file_reader_service_product_reader_messages_proto_rawDescData = protoimpl.X.CompressGZIP(file_reader_service_product_reader_messages_proto_rawDescData)
+func file_proto_reader_service_product_reader_messages_proto_rawDescGZIP() []byte {
+	file_proto_reader_service_product_reader_messages_proto_rawDescOnce.Do(func() {
+		file_proto_reader_service_product_reader_messages_proto_rawDescData = protoimpl.X.CompressGZIP(file_proto_reader_service_product_reader_messages_proto_rawDescData)
 	})
-	return file_reader_service_product_reader_messages_proto_rawDescData
+	return file_proto_reader_service_product_reader_messages_proto_rawDescData
 }
 
-var file_reader_service_product_reader_messages_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
-var file_reader_service_product_reader_messages_proto_goTypes = []interface{}{
+var file_proto_reader_service_product_reader_messages_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_proto_reader_service_product_reader_messages_proto_goTypes = []interface{}{
 	(*CreateProductReq)(nil),  // 0: CreateProductReq
 	(*CreateProductRes)(nil),  // 1: CreateProductRes
 	(*GetProductByIDReq)(nil), // 2: GetProductByIDReq
 	(*GetProductByIDRes)(nil), // 3: GetProductByIDRes
 	(*model.Product)(nil),     // 4: Product
 }
-var file_reader_service_product_reader_messages_proto_depIdxs = []int32{
+var file_proto_reader_service_product_reader_messages_proto_depIdxs = []int32{
 	4, // 0: CreateProductReq.product:type_name -> Product
 	4, // 1: CreateProductRes.product:type_name -> Product
 	4, // 2: GetProductByIDRes.product:type_name -> Product
@@ -265,13 +266,13 @@ var file_reader_service_product_reader_messages_proto_depIdxs = []int32{
 	0, // [0:3] is the sub-list for field type_name
 }
 
-func init() { file_reader_service_product_reader_messages_proto_init() }
-func file_reader_service_product_reader_messages_proto_init() {
-	if File_reader_service_product_reader_messages_proto != nil {
+func init() { file_proto_reader_service_product_reader_messages_proto_init() }
+func file_proto_reader_service_product_reader_messages_proto_init() {
+	if File_proto_reader_service_product_reader_messages_proto != nil {
 		return
 	}
 	if !protoimpl.UnsafeEnabled {
-		file_reader_service_product_reader_messages_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
+		file_proto_reader_service_product_reader_messages_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*CreateProductReq); i {
 			case 0:
 				return &v.state
@@ -283,7 +284,7 @@ func file_reader_service_product_reader_messages_proto_init() {
 				return nil
 			}
 		}
-		file_reader_service_product_reader_messages_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+		file_proto_reader_service_product_reader_messages_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*CreateProductRes); i {
 			case 0:
 				return &v.state
@@ -295,7 +296,7 @@ func file_reader_service_product_reader_messages_proto_init() {
 				return nil
 			}
 		}
-		file_reader_service_product_reader_messages_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+		file_proto_reader_service_product_reader_messages_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetProductByIDReq); i {
 			case 0:
 				return &v.state
@@ -307,7 +308,7 @@ func file_reader_service_product_reader_messages_proto_init() {
 				return nil
 			}
 		}
-		file_reader_service_product_reader_messages_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+		file_proto_reader_service_product_reader_messages_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetProductByIDRes); i {
 			case 0:
 				return &v.state
@@ -324,18 +325,18 @@ func file_reader_service_product_reader_messages_proto_init() {
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: file_reader_service_product_reader_messages_proto_rawDesc,
+			RawDescriptor: file_proto_reader_service_product_reader_messages_proto_rawDesc,
 			NumEnums:      0,
 			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_reader_service_product_reader_messages_proto_goTypes,
-		DependencyIndexes: file_reader_service_product_reader_messages_proto_depIdxs,
-		MessageInfos:      file_reader_service_product_reader_messages_proto_msgTypes,
+		GoTypes:           file_proto_reader_service_product_reader_messages_proto_goTypes,
+		DependencyIndexes: file_proto_reader_service_product_reader_messages_proto_depIdxs,
+		MessageInfos:      file_proto_reader_service_product_reader_messages_proto_msgTypes,
 	}.Build()
-	File_reader_service_product_reader_messages_proto = out.File
-	file_reader_service_product_reader_messages_proto_rawDesc = nil
-	file_reader_service_product_reader_messages_proto_goTypes = nil
-	file_reader_service_product_reader_messages_proto_depIdxs = nil
+	File_proto_reader_service_product_reader_messages_proto = out.File
+	file_proto_reader_service_product_reader_messages_proto_rawDesc = nil
+	file_proto_reader_service_product_reader_messages_proto_goTypes = nil
+	file_proto_reader_service_product_reader_messages_proto_depIdxs = nil
 }

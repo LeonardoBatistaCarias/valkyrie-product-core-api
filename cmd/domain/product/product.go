@@ -1,7 +1,7 @@
 package product
 
 import (
-	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/product/grpc/pb/model"
+	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/grpc/pb/model"
 	time_converter "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/utils/time"
 	uuid "github.com/satori/go.uuid"
 	"time"

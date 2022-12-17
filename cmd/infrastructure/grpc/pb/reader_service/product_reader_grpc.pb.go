@@ -9,6 +9,8 @@ package reader_service
 import (
 	context "context"
 	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -33,7 +35,7 @@ func NewProductReaderServiceClient(cc grpc.ClientConnInterface) ProductReaderSer
 
 func (c *productReaderServiceClient) GetProductByID(ctx context.Context, in *GetProductByIDReq, opts ...grpc.CallOption) (*GetProductByIDRes, error) {
 	out := new(GetProductByIDRes)
-	err := c.cc.Invoke(ctx, "/productReader.ProductReaderService/GetProductByID", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/ProductReaderService/GetProductByID", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -41,9 +43,27 @@ func (c *productReaderServiceClient) GetProductByID(ctx context.Context, in *Get
 }
 
 // ProductReaderServiceServer is the server API for ProductReaderService service.
+// All implementations must embed UnimplementedProductReaderServiceServer
 // for forward compatibility
 type ProductReaderServiceServer interface {
 	GetProductByID(context.Context, *GetProductByIDReq) (*GetProductByIDRes, error)
+	mustEmbedUnimplementedProductReaderServiceServer()
+}
+
+// UnimplementedProductReaderServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedProductReaderServiceServer struct {
+}
+
+func (UnimplementedProductReaderServiceServer) GetProductByID(context.Context, *GetProductByIDReq) (*GetProductByIDRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProductByID not implemented")
+}
+func (UnimplementedProductReaderServiceServer) mustEmbedUnimplementedProductReaderServiceServer() {}
+
+// UnsafeProductReaderServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to ProductReaderServiceServer will
+// result in compilation errors.
+type UnsafeProductReaderServiceServer interface {
+	mustEmbedUnimplementedProductReaderServiceServer()
 }
 
 func RegisterProductReaderServiceServer(s grpc.ServiceRegistrar, srv ProductReaderServiceServer) {
@@ -60,7 +80,7 @@ func _ProductReaderService_GetProductByID_Handler(srv interface{}, ctx context.C
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/productReader.ProductReaderService/GetProductByID",
+		FullMethod: "/ProductReaderService/GetProductByID",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ProductReaderServiceServer).GetProductByID(ctx, req.(*GetProductByIDReq))
@@ -72,7 +92,7 @@ func _ProductReaderService_GetProductByID_Handler(srv interface{}, ctx context.C
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var ProductReaderService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "productReader.ProductReaderService",
+	ServiceName: "ProductReaderService",
 	HandlerType: (*ProductReaderServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

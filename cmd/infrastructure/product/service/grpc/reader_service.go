@@ -3,20 +3,20 @@ package grpc
 import (
 	"context"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/domain/product"
-	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/product/grpc/pb/reader_service"
+	reader_service2 "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/grpc/pb/reader_service"
 	uuid "github.com/satori/go.uuid"
 )
 
 type ReaderService struct {
-	rc reader_service.ProductReaderServiceClient
+	rc reader_service2.ProductReaderServiceClient
 }
 
-func NewReaderService(rc reader_service.ProductReaderServiceClient) *ReaderService {
+func NewReaderService(rc reader_service2.ProductReaderServiceClient) *ReaderService {
 	return &ReaderService{rc: rc}
 }
 
 func (s *ReaderService) GetProductByID(productID uuid.UUID) (*product.Product, error) {
-	cmd := &reader_service.GetProductByIDReq{ProductID: productID.String()}
+	cmd := &reader_service2.GetProductByIDReq{ProductID: productID.String()}
 
 	res, err := s.rc.GetProductByID(context.Background(), cmd)
 	if err != nil {

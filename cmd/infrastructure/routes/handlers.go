@@ -47,6 +47,7 @@ func (h *productsHandlers) CreateProduct() echo.HandlerFunc {
 			return c.JSON(http.StatusBadRequest, err)
 		}
 
+		h.log.Info("The product has been created. ID: ", p.ProductID)
 		h.metrics.SuccessHttpRequests.Inc()
 		return c.JSON(http.StatusCreated, p)
 	}
@@ -90,7 +91,7 @@ func (h *productsHandlers) DeactivateProductByID() echo.HandlerFunc {
 			return c.JSON(http.StatusBadRequest, err)
 		}
 
-		h.log.Infof("The product with ID %s has been deleted", productID)
+		h.log.Infof("The product with ID %s has been deactivated", productID)
 		h.metrics.SuccessHttpRequests.Inc()
 		return c.NoContent(http.StatusOK)
 	}
