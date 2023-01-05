@@ -3,7 +3,6 @@ package config
 import (
 	"flag"
 	"fmt"
-	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/prometheus"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/rest"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/utils/constants"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/utils/logger"
@@ -28,7 +27,7 @@ type Config struct {
 	Grpc        Grpc                `mapstructure:"grpc"`
 	Rest        *rest.Config        `mapstructure:"rest"`
 	Kafka       *kafkaConfig.Config `mapstructure:"kafka"`
-	Prometheus  prometheus.Config   `mapstructure:"prometheus"`
+	Prometheus  Prometheus          `mapstructure:"prometheus"`
 }
 
 type Http struct {
@@ -50,6 +49,16 @@ type KafkaTopics struct {
 	ProductDelete     kafkaConfig.TopicConfig `mapstructure:"productDelete"`
 	ProductUpdate     kafkaConfig.TopicConfig `mapstructure:"productUpdate"`
 	ProductDeactivate kafkaConfig.TopicConfig `mapstructure:"productDeactivate"`
+}
+
+type Prometheus struct {
+	ReadinessPath        string `mapstructure:"readinessPath"`
+	LivenessPath         string `mapstructure:"livenessPath"`
+	Port                 string `mapstructure:"port"`
+	Pprof                string `mapstructure:"pprof"`
+	PrometheusPath       string `mapstructure:"prometheusPath"`
+	PrometheusPort       string `mapstructure:"prometheusPort"`
+	CheckIntervalSeconds int    `mapstructure:"checkIntervalSeconds"`
 }
 
 func InitConfig() (*Config, error) {

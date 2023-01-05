@@ -7,9 +7,9 @@ import (
 	categoryRestGateway "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/category"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/grpc"
 	kafkaClient "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/kafka"
-	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/metrics"
 	gateway "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/product"
 	grpc_reader "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/product/grpc"
+	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/prometheus"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/rest"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/routes"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/utils/logger"
@@ -29,7 +29,7 @@ type server struct {
 	echo      *echo.Echo
 	kafkaConn *kafka.Conn
 	v         *validator.Validate
-	m         *metrics.Metrics
+	m         *prometheus.Metrics
 }
 
 func NewServer(log logger.Logger, cfg *config.Config) *server {
@@ -40,7 +40,7 @@ func (s *server) Run() error {
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM, syscall.SIGINT)
 	defer cancel()
 
-	s.m = metrics.NewMetrics(s.cfg)
+	s.m = prometheus.NewMetrics(s.cfg)
 
 	kafkaProducer := kafkaClient.NewProducer(s.log, s.cfg.Kafka.Brokers)
 	defer kafkaProducer.Close()

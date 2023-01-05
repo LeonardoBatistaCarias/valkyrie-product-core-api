@@ -4,8 +4,8 @@ import (
 	"context"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/application/commands"
 	commandModel "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/application/commands/model"
-	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/metrics"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/product/model"
+	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/prometheus"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/utils/logger"
 	"github.com/labstack/echo/v4"
 	uuid "github.com/satori/go.uuid"
@@ -16,14 +16,14 @@ type productsHandlers struct {
 	group   *echo.Group
 	log     logger.Logger
 	c       commands.Commands
-	metrics *metrics.Metrics
+	metrics *prometheus.Metrics
 }
 
 func NewProductsHandlers(
 	group *echo.Group,
 	log logger.Logger,
 	c commands.Commands,
-	metrics *metrics.Metrics,
+	metrics *prometheus.Metrics,
 ) *productsHandlers {
 	return &productsHandlers{group: group, log: log, c: c, metrics: metrics}
 }
