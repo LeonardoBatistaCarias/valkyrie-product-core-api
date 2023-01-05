@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/prometheus"
+	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/rest"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/utils/constants"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/utils/logger"
 	"os"
@@ -25,6 +26,7 @@ type Config struct {
 	KafkaTopics KafkaTopics         `mapstructure:"kafkaTopics"`
 	Http        Http                `mapstructure:"http"`
 	Grpc        Grpc                `mapstructure:"grpc"`
+	Rest        *rest.Config        `mapstructure:"rest"`
 	Kafka       *kafkaConfig.Config `mapstructure:"kafka"`
 	Prometheus  prometheus.Config   `mapstructure:"prometheus"`
 }

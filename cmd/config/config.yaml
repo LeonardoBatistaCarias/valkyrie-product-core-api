@@ -14,6 +14,8 @@ logger:
   encoder: json
 grpc:
   readerServicePort: 5003
+rest:
+  categoryServicePath: "http://localhost:9001/api/categories"
 kafka:
   brokers: [ "localhost:9092" ]
   groupID: product_core_writer_api_consumer

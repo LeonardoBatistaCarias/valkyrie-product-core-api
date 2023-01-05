@@ -3,7 +3,7 @@ package commands
 import (
 	"context"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/domain/product"
-	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/product/service/grpc"
+	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/product/grpc"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/utils/logger"
 	"github.com/go-playground/validator"
 	uuid "github.com/satori/go.uuid"

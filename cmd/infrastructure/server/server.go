@@ -4,11 +4,13 @@ import (
 	"context"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/application/commands"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/config"
+	categoryRestGateway "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/category"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/grpc"
 	kafkaClient "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/kafka"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/metrics"
 	gateway "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/product"
-	grpc_reader "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/product/service/grpc"
+	grpc_reader "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/product/grpc"
+	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/rest"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/routes"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/utils/logger"
 	"github.com/go-playground/validator"
@@ -61,7 +63,11 @@ func (s *server) Run() error {
 	rs := grpc_reader.NewReaderService(rc)
 
 	kafkaGateway := gateway.NewProductKafkaGateway(s.cfg, kafkaProducer)
-	commands := commands.NewCommands(s.log, kafkaGateway, s.v, rs)
+
+	restClient := rest.NewRestClient(s.log)
+	categoryRestGateway := categoryRestGateway.NewCategoryRestGateway(s.cfg, s.log, restClient)
+
+	commands := commands.NewCommands(s.log, kafkaGateway, categoryRestGateway, s.v, rs)
 
 	productHandlers := routes.NewProductsHandlers(s.echo.Group(s.cfg.Http.ProductsPath), s.log, *commands, s.m)
 	productHandlers.MapRoutes()

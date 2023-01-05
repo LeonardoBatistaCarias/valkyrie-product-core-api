@@ -3,6 +3,7 @@ package commands
 import (
 	"context"
 	commandModel "github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/application/commands/model"
+	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/domain/category"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/domain/product"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/infrastructure/product/model"
 	"github.com/LeonardoBatistaCarias/valkyrie-product-core-api/cmd/utils/logger"
@@ -15,13 +16,14 @@ type CreateProductCommandHandler interface {
 }
 
 type createProductHandler struct {
-	log     logger.Logger
-	gateway product.ProductGateway
-	v       *validator.Validate
+	log logger.Logger
+	pg  product.ProductGateway
+	cg  category.CategoryGateway
+	v   *validator.Validate
 }
 
-func NewCreateProductHandler(log logger.Logger, productGateway product.ProductGateway, v *validator.Validate) *createProductHandler {
-	return &createProductHandler{log: log, gateway: productGateway, v: v}
+func NewCreateProductHandler(log logger.Logger, pg product.ProductGateway, cg category.CategoryGateway, v *validator.Validate) *createProductHandler {
+	return &createProductHandler{log: log, pg: pg, cg: cg, v: v}
 }
 
 func (c *createProductHandler) Handle(ctx context.Context, cmd commandModel.ProductCommand) (*model.CreateProductResponse, error) {
@@ -32,7 +34,12 @@ func (c *createProductHandler) Handle(ctx context.Context, cmd commandModel.Prod
 		return nil, err
 	}
 
-	if err := c.gateway.CreateProduct(ctx, *p); err != nil {
+	if _, err := c.cg.FindCategoryByID(ctx, p.CategoryID.String()); err != nil {
+		c.log.WarnMsg("FindCategoryByID", err)
+		return nil, err
+	}
+
+	if err := c.pg.CreateProduct(ctx, *p); err != nil {
 		c.log.Errorf("Error in generating a novelty in ProductCreate topic", err)
 		return nil, err
 	}
